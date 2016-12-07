@@ -19,4 +19,5 @@ from myblog import views
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
+    url(r'^blog/', views.blog, name='blog'),
 ]
