@@ -15,8 +15,15 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.conf import settings
+from django.views import static
+from myblog.upload import upload_image
+
 
 urlpatterns = [
     url(r'^', include('myblog.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'media/(?P<path>.*)$', static.serve, {'document_root': settings.MEDIA_ROOT, }),
+    url(r'^admin/upload/(?P<dir_name>[^/]+)$', upload_image, name='upload_image'),
+
 ]

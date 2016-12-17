@@ -2,10 +2,127 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="昕月的个人博客">
+    <meta name="author" content="昕月">
+    <link rel="icon" href="{% static 'images/favicon.ico' %}">
 
+    <title>昕月的小黑屋</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/blog.css' %}" rel="stylesheet">
+</head>
+
+<body>
+<header>
+<div class="blog-masthead">
+    <div class="container">
+        <nav id="topnav" class="blog-nav">
+        <ul>
+          <a href="/" class="blog-nav-item">Home</a>
+          {% for category in category_list %}
+          <a href="{% url 'category' %}?id={{ category.id }}" class="blog-nav-item">{{ category.name }}</a>
+          {% endfor %}
+        </ul>
+      </nav>
+    </div>
+</div>
+</header>
+
+<div class="container">
+    <div class="row">
+    {% block blog-header %}
+    <div class="blog-header">
+        <h1 class="blog-title">Latest Articles</h1>
+        <p class="lead blog-description">Simplicity is the ultimate sophistication.</p>
+    </div>
+    {% endblock %}
+    {% block left_content %}
+
+    {% endblock %}
+    {% block sidebar %}
+    <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+{#    <div class="col-sm-3 col-sm-offset-1 blog-sidebar">#}
+        <div class="sidebar-module">
+            <h4>About</h4>
+            <p>It's XinYue</p>
+        </div>
+        <div class="sidebar-module">
+            <h4>Archives</h4>
+            <ol class="list-unstyled">
+                {% for archive in archive_list %}
+                    <li><a href='{% url 'archive' %}?year={{ archive | slice:":4" }}&month={{ archive | slice:"5:7" }}'>{{ archive }}</a></li>
+                {% endfor %}
+            </ol>
+        </div>
+        <div class="sidebar-module">
+            <h4>Tags</h4>
+            <div class="tag-cloud">
+                {% for tag in tag_list %}
+                    <a href="{% url 'tag' %}?id={{ tag.id }}">{{ tag.name }}</a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="sidebar-module">
+            <h4>Elsewhere</h4>
+            <ol class="list-unstyled">
+                <li><a href="https://github.com/sy813" target="_blank">GitHub</a></li>
+                <li><a href="https://twitter.com/XINYUE_SY" target="_blank">Twitter</a></li>
+                <li><a href="http://weibo.com/sym813" target="_blank">Weibo</a></li>
+            </ol>
+        </div>
+    </div><!-- /.blog-sidebar -->
+{% endblock %}
+    </div><!-- /.row -->
+</div><!-- /.container -->
+
+{% block footer %}
+<footer class="blog-footer">
+    <p>正在备案ing......</p>
+<div id="tbox">
+    <a id="gotop" href="javascript:void(0)"><span class="glyphicon glyphicon-plane"></span></a>
+</div>
+</footer>
+{% endblock %}
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+<script type="text/javascript">
+    function goTop(){
+    $(window).scroll(function(e) {
+        //滚动条离顶部大于100元素时
+        if($(window).scrollTop()>100)
+            $("#gotop").fadeIn(1000);//以1秒的间隔渐显id=gotop的元素
+        else
+            $("#gotop").fadeOut(1000);//以1秒的间隔渐隐id=gotop的元素
+    });
+    }
+    $(function(){
+        //点击回到顶部的元素
+        $("#gotop").click(function(e) {
+                $('body,html').animate({scrollTop:0},1000);//以1秒的间隔返回顶部
+        });
+        goTop();//实现回到顶部元素的渐显与渐隐
+    });
+    // nav.js
+    var obj=null;
+    var As=document.getElementById('topnav').getElementsByTagName('a');
+    obj = As[0];
+    for(i=1;i<As.length;i++){if(window.location.href.indexOf(As[i].href)>=0)
+    obj=As[i];}
+    obj.id='topnav_current'
+</script>
 </body>
 </html>

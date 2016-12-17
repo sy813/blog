@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block left_content %}
+    <div class="blog-header">
+    </div>
+    <div class="col-sm-8 blog-main">
+        <div class="blog-post">
+            <h2 class="blog-post-title">{{ reason | safe }}</h2>
+        </div>
+    </div><!-- /.blog-main -->
+{% endblock %}
+{% block footer %}
+{% endblock %}

@@ -16,8 +16,11 @@ Including another URLconf
 from django.conf.urls import url
 from myblog import views
 
-
 urlpatterns = [
     url(r'^$', views.index, name='index'),
-    url(r'^blog/', views.blog, name='blog'),
+    url(r'^category/$', views.category, name='category'),
+    url(r'^archive/$', views.archive, name='archive'),
+    url(r'^tag/$', views.tag, name='tag'),
+    url(r'^article/$', views.article, name='article'),
+    url(r'^test/', views.test, name='test'),
 ]

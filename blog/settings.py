@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'vow!qq64ldn!!s03l9g2#x-_dhr1f^arg!@op)6-kbn1mjx7xn'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-if socket.gethostname() == 'DESKTOP-XINYUE':
+if socket.gethostname() == 'XINYUE-PC' or 'xinyue-ubuntu':
     DEBUG = True
 else:
     DEBUG = False
@@ -68,6 +68,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'myblog.views.global_data',
             ],
         },
     },
@@ -130,3 +131,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
