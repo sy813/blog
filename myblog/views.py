@@ -23,7 +23,7 @@ def archive(request):
     month = request.GET.get('month', None)
     article_lists = Article.objects.filter(date_publish__icontains=year+'-'+month)
     article_list = get_page(request, article_lists)
-    return render(request, 'archive.html', {'article_list': article_list})
+    return render(request, 'index.html', {'article_list': article_list})
 
 
 # 标签
@@ -35,7 +35,7 @@ def tag(request):
         return render(request, 'failure.html', {'reason': '标签不存在'})
     article_lists = Article.objects.filter(tag=tag)
     article_list = get_page(request, article_lists)
-    return render(request, 'tag.html', {'article_list': article_list})
+    return render(request, 'index.html', {'article_list': article_list})
 
 
 # 分类
@@ -47,7 +47,7 @@ def category(request):
         return render(request, 'failure.html', {'reason': '分类不存在'})
     article_list = Article.objects.filter(category=category)
     article_list = get_page(request, article_list)
-    return render(request, 'category.html', locals())
+    return render(request, 'index.html', locals())
 
 
 #  分页

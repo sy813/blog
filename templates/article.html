@@ -9,8 +9,8 @@
     <div class="col-sm-12 blog-main">
             <div class="blog-post">
                 <h2 class="blog-post-title">{{ article.title }}</h2>
-                <p class="blog-post-meta">{{ article.date_publish | date:'Y M j D A'}} | < {{ article.category }} > |
-                    {% for tag in article.tag.all %}[{{ tag.name }}]{% endfor %}</p>
+                <p class="blog-post-meta">{{ article.date_publish|date:"Y-m-d" }} | < {{ article.category }} > |
+                    {% for tag in article.tag.all %}< {{ tag.name }} >{% endfor %}</p>
                 <p>{{ article.content | safe }}</p>
             </div>
     </div><!-- /.blog-main -->

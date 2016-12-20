@@ -89,12 +89,12 @@ a#topnav_current {
  */
 
 .blog-header {
-  padding: 15px;
+    padding: 10px 25px;
 }
 .blog-title {
   margin-top: 20px;
   margin-bottom: 0;
-  font-size: 45px;
+    font-size: 35px;
   font-weight: normal;
 }
 .blog-description {
@@ -166,6 +166,11 @@ a#topnav_current {
   margin-bottom: 20px;
   color: #999;
 }
+
+.blog-post-meta span {
+    font-size: 14px;
+    padding: 0 2px;
+}
 .blog-post p a:hover{
     padding: 2px;
     background-color: rgba(169, 235, 165, 0.52);
@@ -177,7 +182,7 @@ a#topnav_current {
  */
 
 .blog-footer {
-  padding: 10px 0;
+    padding: 8px 0;
   color: #999;
   text-align: center;
   background-color: #f9f9f9;
@@ -185,6 +190,11 @@ a#topnav_current {
 }
 .blog-footer p:last-child {
   margin-bottom: 0;
+}
+
+.blog-footer a, a:hover {
+    color: #999;
+    text-decoration: none;
 }
 
 #tbox {
@@ -198,12 +208,12 @@ a#topnav_current {
 #gotop {
     display: none;
     clear: both;
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     border-radius: 6px;
 }
 #gotop span  {
-    font-size: 40px;
+    font-size: 30px;
 
 }
 #gotop {

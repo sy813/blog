@@ -44,7 +44,26 @@
     </div>
     {% endblock %}
     {% block left_content %}
-
+        <div class="col-sm-8 blog-main">
+            {% for article in article_list %}
+                <div class="blog-post">
+                    <h2 class="blog-post-title"><a
+                            href="{% url 'article' %}?id={{ article.id }}">{{ article.title }}</a></h2>
+                    <p class="blog-post-meta">
+                        <span class="glyphicon glyphicon-calendar"></span>{{ article.date_publish|date:"Y-m-d" }}
+                        <span class="glyphicon glyphicon-folder-close"></span>{{ article.category }}
+                        {% for tag in article.tag.all %}
+                            <span class="glyphicon glyphicon-tag"></span>{{ tag.name }}
+                        {% endfor %}
+                    </p>
+                    <p>{{ article.content | striptags | slice:":200" }}......</p>
+                    <p><a href="{% url 'article' %}?id={{ article.id }}">More>>></a></p>
+                </div>
+            {% endfor %}
+            <nav>
+                {% include 'pagination.html' %}
+            </nav>
+        </div><!-- /.blog-main -->
     {% endblock %}
     {% block sidebar %}
     <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
@@ -84,13 +103,12 @@
 
 {% block footer %}
 <footer class="blog-footer">
-    <p>正在备案ing......</p>
+    <p>Copyright © 2015-2016 XINYUE | <a href="http://www.miitbeian.gov.cn">苏ICP备16065447号</a></p>
+</footer>
+{% endblock %}
 <div id="tbox">
     <a id="gotop" href="javascript:void(0)"><span class="glyphicon glyphicon-plane"></span></a>
 </div>
-</footer>
-{% endblock %}
-
 
 <!-- Bootstrap core JavaScript
 ================================================== -->
