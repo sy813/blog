@@ -1,20 +1,23 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block blog-header %}
-
 {% endblock %}
 {% block left_content %}
     <div class="blog-header">
     </div>
     <div class="col-sm-12 blog-main">
-            <div class="blog-post">
-                <h2 class="blog-post-title">{{ article.title }}</h2>
-                <p class="blog-post-meta">{{ article.date_publish|date:"Y-m-d" }} | < {{ article.category }} > |
-                    {% for tag in article.tag.all %}< {{ tag.name }} >{% endfor %}</p>
-                <p>{{ article.content | safe }}</p>
-            </div>
-    </div><!-- /.blog-main -->
+        <div class="blog-post">
+            <h2 class="blog-post-title">{{ article.title }}</h2>
+            <p class="blog-post-meta">
+                <span class="glyphicon glyphicon-calendar"></span>{{ article.date_publish|date:"Y-m-d" }}
+                <span class="glyphicon glyphicon-folder-close"></span>{{ article.category }}
+                {% for tag in article.tag.all %}
+                    <span class="glyphicon glyphicon-tag"></span>{{ tag.name }}
+                {% endfor %}
+            </p>
+            <p>{{ article.content | safe }}</p>
+        </div>
+    </div>
 {% endblock %}
 {% block sidebar %}
-
 {% endblock %}
