@@ -1,17 +1,21 @@
-<ul class="pager">
-    {% if article_list.has_previous %}
-        <li><a href="?page={{ article_list.previous_page_number }}
+<nav>
+    <ul class="pagination">
+        {% if article_list.has_previous %}
+            <li><a href="?page={{ article_list.previous_page_number }}
             {% if request.GET.year %}&year={{ request.GET.year }}{% endif %}{% if request.GET.month %}&month={{ request.GET.month }}{% endif %}
             {% if request.GET.id %}&id={{ request.GET.id }}{% endif %}
-            ">Previous</a></li>
-    {% else %}
-        <li><a href="/" class="disabled">Previous</a></li>
-    {% endif %}
-    <li><span>{{ article_list.number }}/{{ article_list.paginator.num_pages }}</span></li>
-    {% if article_list.has_next %}
-        <li><a href="?page={{ article_list.next_page_number }}
+            ">&laquo;</a></li>
+        {% else %}
+            <li class="disabled"><a>&laquo;</a></li>
+        {% endif %}
+        <li><a>{{ article_list.number }}/{{ article_list.paginator.num_pages }}</a></li>
+        {% if article_list.has_next %}
+            <li><a href="?page={{ article_list.next_page_number }}
         {% if request.GET.year %}&year={{ request.GET.year }}{% endif %}{% if request.GET.month %}&month={{ request.GET.month }}{% endif %}
         {% if request.GET.id %}&id={{ request.GET.id }}{% endif %}
-        ">Next</a></li>
-    {% endif %}
-</ul>
+        ">&raquo;</a></li>
+        {% else %}
+            <li class="disabled"><a>&raquo;</a></li>
+        {% endif %}
+    </ul>
+</nav>
