@@ -17,94 +17,114 @@
 
     <!-- Custom styles for this template -->
     <link href="{% static 'css/blog.css' %}" rel="stylesheet">
+    <style>
+        span.highlighted {
+            color: red;
+        }
+    </style>
 </head>
 
 <body>
 <header>
-<div class="blog-masthead">
-    <div class="container">
-        <nav id="topnav" class="blog-nav">
-        <ul>
-          <a href="/" class="blog-nav-item">Home</a>
-          {% for category in category_list %}
-          <a href="{% url 'category' %}?id={{ category.id }}" class="blog-nav-item">{{ category.name }}</a>
-          {% endfor %}
-        </ul>
-      </nav>
+    <div class="blog-masthead">
+        <div class="container">
+            <nav id="topnav" class="blog-nav">
+                <ul>
+                    <a href="/" class="blog-nav-item">Home</a>
+                    {% for category in category_list %}
+                        <a href="{% url 'category' %}?id={{ category.id }}"
+                           class="blog-nav-item">{{ category.name }}</a>
+                    {% endfor %}
+                </ul>
+            </nav>
+        </div>
     </div>
-</div>
 </header>
 
 <div class="container">
     <div class="row">
-    {% block blog-header %}
-    <div class="blog-header">
-        <h1 class="blog-title">Latest Articles</h1>
-        <p class="lead blog-description">Simplicity is the ultimate sophistication.</p>
-    </div>
-    {% endblock %}
-    {% block left_content %}
-        <div class="col-sm-8 blog-main">
-            {% for article in article_list %}
-                <div class="blog-post">
-                    <h2 class="blog-post-title"><a
-                            href="{% url 'article' %}?id={{ article.id }}">{{ article.title }}</a></h2>
-                    <p class="blog-post-meta">
-                        <span class="glyphicon glyphicon-calendar"></span>{{ article.date_publish|date:"Y-m-d" }}
-                        <span class="glyphicon glyphicon-folder-close"></span>{{ article.category }}
-                        {% for tag in article.tag.all %}
-                            <span class="glyphicon glyphicon-tag"></span>{{ tag.name }}
-                        {% endfor %}
-                    </p>
-                    <p>{{ article.content | striptags | slice:":200" }}......</p>
-                    <p><a href="{% url 'article' %}?id={{ article.id }}">More>>></a></p>
-                </div>
-            {% endfor %}
-            <nav>
-                {% include 'pagination.html' %}
-            </nav>
-        </div><!-- /.blog-main -->
-    {% endblock %}
-    {% block sidebar %}
-    <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
-{#    <div class="col-sm-3 col-sm-offset-1 blog-sidebar">#}
-        <div class="sidebar-module">
-            <h4>About</h4>
-            <p>It's XinYue</p>
-        </div>
-        <div class="sidebar-module">
-            <h4>Archives</h4>
-            <ol class="list-unstyled">
-                {% for archive in archive_list %}
-                    <li><a href='{% url 'archive' %}?year={{ archive | slice:":4" }}&month={{ archive | slice:"5:7" }}'>{{ archive }}</a></li>
-                {% endfor %}
-            </ol>
-        </div>
-        <div class="sidebar-module">
-            <h4>Tags</h4>
-            <div class="tag-cloud">
-                {% for tag in tag_list %}
-                    <a href="{% url 'tag' %}?id={{ tag.id }}">{{ tag.name }}</a>
-                {% endfor %}
+        {% block blog-header %}
+            <div class="blog-header">
+                <h1 class="blog-title">Latest Articles</h1>
+                <p class="lead blog-description">Simplicity is the ultimate sophistication.</p>
             </div>
-        </div>
-        <div class="sidebar-module">
-            <h4>Elsewhere</h4>
-            <ol class="list-unstyled">
-                <li><a href="https://github.com/sy813" target="_blank">GitHub</a></li>
-                <li><a href="https://twitter.com/XINYUE_SY" target="_blank">Twitter</a></li>
-                <li><a href="http://weibo.com/sym813" target="_blank">Weibo</a></li>
-            </ol>
-        </div>
-    </div><!-- /.blog-sidebar -->
-{% endblock %}
+        {% endblock %}
+        {% block left_content %}
+            <div class="col-sm-8 blog-main">
+                {% for article in article_list %}
+                    <div class="blog-post">
+                        <h2 class="blog-post-title"><a
+                                href="{% url 'article' %}?id={{ article.id }}">{{ article.title }}</a></h2>
+                        <p class="blog-post-meta">
+                            <span class="glyphicon glyphicon-calendar"></span>{{ article.date_publish|date:"Y-m-d" }}
+                            <span class="glyphicon glyphicon-folder-close"></span>{{ article.category }}
+                            {% for tag in article.tag.all %}
+                                <span class="glyphicon glyphicon-tag"></span>{{ tag.name }}
+                            {% endfor %}
+                            <span class="glyphicon glyphicon-eye-open"></span>{{ article.click_count }}
+                        </p>
+                        <p>{{ article.content | striptags | slice:":200" }}......</p>
+                        <p><a href="{% url 'article' %}?id={{ article.id }}">More>>></a></p>
+                    </div>
+                {% endfor %}
+                <nav>
+                    {% include 'pagination.html' %}
+                </nav>
+            </div><!-- /.blog-main -->
+        {% endblock %}
+        {% block sidebar %}
+            <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+                {#    <div class="col-sm-3 col-sm-offset-1 blog-sidebar">#}
+                <form class="sidebar-module" role="search" method="get" id="searchform"
+                      action="{% url 'haystack_search' %}">
+                    <div class="form-group">
+                        <input type="search" name="q" class="form-control" placeholder="Search for title or context"
+                               required>
+                    </div>
+                    <button type="submit" class="btn btn-default">Search</button>
+                </form>
+                <div class="sidebar-module">
+                    <h4>About</h4>
+                    <p>It's XinYue</p>
+                </div>
+                <div class="sidebar-module">
+                    <h4>Archives</h4>
+                    <ol class="list-unstyled">
+                        {% for archive in archive_list %}
+                            <li>
+                                <a href='{% url 'archive' %}?year={{ archive | slice:":4" }}&month={{ archive | slice:"5:7" }}'>{{ archive }}</a>
+                            </li>
+                        {% endfor %}
+                    </ol>
+                </div>
+                <div class="sidebar-module">
+                    <h4>Tags</h4>
+                    <div class="tag-cloud">
+                        {% for tag in tag_list %}
+                            <a href="{% url 'tag' %}?id={{ tag.id }}">{{ tag.name }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="sidebar-module">
+                    <h4>Elsewhere</h4>
+                    <ol class="list-unstyled">
+                        <li><a href="https://github.com/sy813" target="_blank"><span
+                                class="glyphicon glyphicon-chevron-right"></span> GitHub</a></li>
+                        <li><a href="https://twitter.com/XINYUE_SY" target="_blank"><span
+                                class="glyphicon glyphicon-chevron-right"></span> Twitter</a></li>
+                        <li><a href="http://weibo.com/sym813" target="_blank"><span
+                                class="glyphicon glyphicon-chevron-right"></span> Weibo</a></li>
+                    </ol>
+                </div>
+            </div><!-- /.blog-sidebar -->
+        {% endblock %}
     </div><!-- /.row -->
 </div><!-- /.container -->
 
 {% block footer %}
-<footer class="blog-footer">
-    <p>Copyright © 2015-2016 XINYUE | <a href="http://www.miitbeian.gov.cn">苏ICP备16065447号</a></p>
-</footer>
+    <footer class="blog-footer">
+        <p>Copyright © 2016-2017 XINYUE | <a href="http://www.miitbeian.gov.cn">苏ICP备16065447号</a></p>
+    </footer>
 {% endblock %}
 <div id="tbox">
     <a id="gotop" href="javascript:void(0)"><span class="glyphicon glyphicon-plane"></span></a>
@@ -118,29 +138,32 @@
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
 
 <script type="text/javascript">
-    function goTop(){
-    $(window).scroll(function(e) {
-        //滚动条离顶部大于100元素时
-        if($(window).scrollTop()>100)
-            $("#gotop").fadeIn(1000);//以1秒的间隔渐显id=gotop的元素
-        else
-            $("#gotop").fadeOut(1000);//以1秒的间隔渐隐id=gotop的元素
-    });
+    function goTop() {
+        $(window).scroll(function (e) {
+            //滚动条离顶部大于100元素时
+            if ($(window).scrollTop() > 100)
+                $("#gotop").fadeIn(1000);//以1秒的间隔渐显id=gotop的元素
+            else
+                $("#gotop").fadeOut(1000);//以1秒的间隔渐隐id=gotop的元素
+        });
     }
-    $(function(){
+
+    $(function () {
         //点击回到顶部的元素
-        $("#gotop").click(function(e) {
-                $('body,html').animate({scrollTop:0},1000);//以1秒的间隔返回顶部
+        $("#gotop").click(function (e) {
+            $('body,html').animate({scrollTop: 0}, 1000);//以1秒的间隔返回顶部
         });
         goTop();//实现回到顶部元素的渐显与渐隐
     });
     // nav.js
-    var obj=null;
-    var As=document.getElementById('topnav').getElementsByTagName('a');
+    var obj = null;
+    var As = document.getElementById('topnav').getElementsByTagName('a');
     obj = As[0];
-    for(i=1;i<As.length;i++){if(window.location.href.indexOf(As[i].href)>=0)
-    obj=As[i];}
-    obj.id='topnav_current'
+    for (i = 1; i < As.length; i++) {
+        if (window.location.href.indexOf(As[i].href) >= 0)
+            obj = As[i];
+    }
+    obj.id = 'topnav_current'
 </script>
 </body>
 </html>

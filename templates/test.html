@@ -1,25 +1,15 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block left_content %}
-
-<ul class="nav nav-tabs" role="tablist" id="myTab">
-  <li role="presentation" class="active"><a href="#home" role="tab" data-toggle="tab">Home</a></li>
-  <li role="presentation"><a href="#profile" role="tab" data-toggle="tab">Profile</a></li>
-  <li role="presentation"><a href="#messages" role="tab" data-toggle="tab">Messages</a></li>
-  <li role="presentation"><a href="#settings" role="tab" data-toggle="tab">Settings</a></li>
-</ul>
-
-{#<div class="tab-content">#}
-{#  <div role="tabpanel" class="tab-pane active" id="home">...</div>#}
-{#  <div role="tabpanel" class="tab-pane" id="profile">...</div>#}
-{#  <div role="tabpanel" class="tab-pane" id="messages">...</div>#}
-{#  <div role="tabpanel" class="tab-pane" id="settings">...</div>#}
-{#</div>#}
-
-<script>
-  $(function () {
-    $('#myTab a:last').tab('show')
-  })
-</script>
-
+    <pre><code>
+    def tag(request):
+    cid = request.GET.get('id', None)
+    try:
+        tag = Tag.objects.get(pk=cid)
+    except Tag.DoesNotExist:
+        return render(request, 'failure.html', {'reason': '标签不存在'})
+    article_lists = Article.objects.filter(tag=tag)
+    article_list = get_page(request, article_lists)
+    return render(request, 'index.html', {'article_list': article_list})
+</code></pre>
 {% endblock %}

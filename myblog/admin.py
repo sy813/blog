@@ -4,7 +4,7 @@ from myblog.models import *
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ('title', 'category', 'date_publish',)
+    list_display = ('title', 'category', 'date_publish', 'click_count',)
 
     class Media:
         js = (
@@ -23,7 +23,6 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
-    list_display = ('name', )
-    list_editable = ('name', )
+    list_display = ('name',)
+    list_editable = ('name',)
     list_display_links = None
-

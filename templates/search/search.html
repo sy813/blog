@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load highlight %}
+{% block left_content %}
+    <div class="col-sm-8 blog-main">
+        {% if query %}
+            {% for article in page.object_list %}
+                <div class="blog-post">
+                    <h2 class="blog-post-title"><a
+                            href="{% url 'article' %}?id={{ article.object.id }}">{% highlight article.object.title with query %}</a>
+                    </h2>
+                    <p class="blog-post-meta">
+                        <span class="glyphicon glyphicon-calendar"></span>{{ article.date_publish|date:"Y-m-d" }}
+                        <span class="glyphicon glyphicon-folder-close"></span>{{ article.object.category }}
+                        {% for tag in article.object.tag.all %}
+                            <span class="glyphicon glyphicon-tag"></span>{{ tag.name }}
+                        {% endfor %}
+                        <span class="glyphicon glyphicon-eye-open"></span>{{ article.object.click_count }}
+                    </p>
+                    <p>{% highlight article.object.content with query %}......</p>
+                    {#                    <p>{% highlight article.object.content | striptags | slice:":200" with query %}......</p>#}
+                    <p><a href="{% url 'article' %}?id={{ article.object.id }}">More>>></a></p>
+                </div>
+            {% empty %}
+                <div class="no-post">没有搜索到你想要的结果！</div>
+            {% endfor %}
+            <nav>
+                <ul class="pagination">
+                    {% if page.has_previous %}
+                        <li><a href="?q={{ query }}&page={{ page.previous_page_number }}">&laquo;</a></li>
+                    {% else %}
+                        <li class="disabled"><a>&laquo;</a></li>
+                    {% endif %}
+                    <li><a>{{ page.number }}/{{ page.paginator.num_pages }}</a></li>
+                    {% if page.has_next %}
+                        <li><a href="?q={{ query }}&page={{ page.next_page_number }}">&raquo;</a></li>
+                    {% else %}
+                        <li class="disabled"><a>&raquo;</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        {% else %}
+            请输入搜索关键词，例如 python
+        {% endif %}
+    </div><!-- /.blog-main -->
+{% endblock %}

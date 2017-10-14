@@ -196,25 +196,25 @@ a#topnav_current {
     width: 54px;
     float: right;
     position: fixed;
-    right: 150px;
-    bottom: 80px;
+    right: 5%;
+    bottom: 50px;
 }
 
 #gotop {
     display: none;
     clear: both;
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
     border-radius: 6px;
 }
 
 #gotop span {
-    font-size: 30px;
+    font-size: 20px;
 
 }
 
 #gotop {
-    background-position: 12px 10px;
+    background-position: 8px 6px;
 }
 
 #gotop:hover {
